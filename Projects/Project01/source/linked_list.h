@@ -35,14 +35,22 @@ public:
   }
 
   void pop_front(){
-    ListNode* tmp = head; // Creates a temmporary pointer to protect the list
+    if (head == NULL){
+      cout << "Empty\n";
+      return;
+    }
+    ListNode* tmp = head; // Creates a temporary pointer to protect the list
     head = head -> next; // Protect the list by advancing past the data to be removed
     delete tmp; // Remove old head
   }
 
   void reverse(){
-    if (head == NULL || head -> next == NULL){ // Empty or one item list
-    return;
+    if (head == NULL){ // Empty list
+      cout << "Empty\n";
+      return;
+    }
+    if (head -> next == NULL){ // One item list
+      return;
     }
     ListNode* previous; // A temporary pointer to allow for stitching the list
     ListNode* cursor = head -> next; // A temporary pointer to protect the list
@@ -60,14 +68,15 @@ public:
   
   void print() const{
     if (head == NULL){
+      cout << "Empty\n";
       return;
     }
     else {
-      ListNode* tmp = head; // Temporary pointer to iterate through the list
+      ListNode* cursor = head; // Temporary pointer to iterate through the list
       do{
-        cout << tmp -> data << ", ";
-        tmp = tmp -> next; // advance tmp
-      } while(tmp != NULL);
+        cout << cursor -> data << " ";
+        cursor = cursor -> next; // advance cursor
+      } while(cursor != NULL);
       cout << endl;
     }
   }
