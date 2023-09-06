@@ -26,10 +26,13 @@ public:
 
   void push_front(const T data){
     if (head == NULL){ // Empty List
-      head = new ListNode(data, NULL); // Creates a new node as the first piece of data
+      ListNode* newNode = new ListNode(data); // Make a new node with the appropriate data
+      newNode -> next = NULL; // Set the end of the list to NULL
+      head = newNode; // Set this node as the head
     }
     else{
-      ListNode* newNode = new ListNode(data, head); // Creates a node that will soon become the head
+      ListNode* newNode = new ListNode(data); // Creates a node that will soon become the head
+      newNode -> next = head; // Set this as the first node
       head = newNode; // Makes the new node the head
     }
   }
