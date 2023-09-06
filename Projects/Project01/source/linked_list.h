@@ -11,7 +11,7 @@ public:
   // You need to implement the following functions. 
   
   ~LinkedList(){
-    if (head == nullptr){ // Empty list
+    if (head == NULL){ // Empty list
       return;
     }
     else{
@@ -20,13 +20,13 @@ public:
         tmp = head; // Track the List head
         head = head -> next; // Advance head
         delete tmp; // Remove old node
-      } while(head != nullptr);
+      } while(head != NULL);
     }
   }
 
   void push_front(const T data){
-    if (head == nullptr){ // Empty List
-      head = new ListNode(data, nullptr); // Creates a new node as the first piece of data
+    if (head == NULL){ // Empty List
+      head = new ListNode(data, NULL); // Creates a new node as the first piece of data
     }
     else{
       ListNode* newNode = new ListNode(data, head); // Creates a node that will soon become the head
@@ -40,10 +40,26 @@ public:
     delete tmp; // Remove old head
   }
 
-  // void reverse();
+  void reverse(){
+    if (head == NULL || head -> next == NULL){ // Empty or one item list
+    return;
+    }
+    ListNode* previous; // A temporary pointer to allow for stitching the list
+    ListNode* cursor = head -> next; // A temporary pointer to protect the list
+    head -> next = NULL; // Sets the old head as the end of the list
+    while (cursor -> next != NULL){
+      previous = head; // Advances previous to protect list
+      head = cursor; // Advances head closer to the final head
+      cursor = cursor -> next; // Advances cursor to protect list
+      head -> next = previous; // Stiches list
+    }
+    previous = head; // Advances previous to protect list
+    head = cursor; // Advances head to final position
+    head -> next = previous; // Completes stitching the list
+  }
   
   void print() const{
-    if (head == nullptr){
+    if (head == NULL){
       return;
     }
     else {
@@ -51,7 +67,7 @@ public:
       do{
         cout << tmp -> data << ", ";
         tmp = tmp -> next; // advance tmp
-      } while(tmp != nullptr);
+      } while(tmp != NULL);
       cout << endl;
     }
   }
