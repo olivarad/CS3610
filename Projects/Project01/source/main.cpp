@@ -20,6 +20,9 @@ int main(int argc, char** argv) {
       case 'p': // print
         list.print();
         break;
+        default:
+          continue;
+          break;
     }
     i++;
   }
