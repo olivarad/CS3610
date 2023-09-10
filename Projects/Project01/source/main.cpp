@@ -4,12 +4,13 @@ using namespace std;
 
 int main(int argc, char** argv) {
   LinkedList<int> list;
-  int i = 1; // Ignore first argument being the program location
-  while (*argv[i] != 'q'){ // Quit on q
-    switch (*argv[i]){
+  char input;
+  cin >> input;
+  while (input != 'q'){ // Quit on q
+    switch (input){
       case 'a': // Add
-        i++; // Requires next argument
-        list.push_front(*argv[i] - 48);
+        cin >> input;
+        list.push_front(input - 48);
         break;
       case 'd': // delete
         list.pop_front();
@@ -21,9 +22,8 @@ int main(int argc, char** argv) {
         list.print();
         break;
         default:
-          continue;
           break;
     }
-    i++;
+    cin >> input;
   }
 }
