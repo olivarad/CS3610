@@ -31,6 +31,7 @@ int main(){
         cout << "Average: " << average << endl;
         cout << "STDEV: " << stdev << endl;
     }
+    return 0;
 }
 
 int menu(vector<double>& vec){ // Inputing the variable directly into the vector and returning a 0 on continue and 1 on quit
