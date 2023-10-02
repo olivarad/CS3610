@@ -43,49 +43,49 @@ void KnightsTour::get_moves(
   int row, int col, 
   int row_moves[], int col_moves[], int& num_moves
 ) {
-  if (col + 2 <= 4 && row - 1 >= 0){ // Valid move 2 right 1 up
+  if (col + 2 <= 4 && row - 1 >= 0 && board[row - 1][col + 2] == 0){ // Valid move 2 right 1 up
     row_moves[num_moves] = row - 1; // Add the valid row to moves
     col_moves[num_moves] = col + 2; // Add the valid col to moves
     num_moves += 1; // Increment the valid move counter
   }
 
-  if (col + 2 <= 4 && row + 1 <= 4){ // Valid move 2 right 1 down
+  if (col + 2 <= 4 && row + 1 <= 4 && board[row + 1][col + 2] == 0){ // Valid move 2 right 1 down
     row_moves[num_moves] = row + 1; // Add the valid row to moves
     col_moves[num_moves] = col + 2; // Add the valid col to moves
     num_moves += 1; // Increment the valid move counter
   }
 
-  if (col + 1 <= 4 && row + 2 <= 4){ // Valid move 1 right 2 down
+  if (col + 1 <= 4 && row + 2 <= 4 && board[row + 2][col + 1] == 0){ // Valid move 1 right 2 down
     row_moves[num_moves] = row + 2; // Add the valid row to moves
     col_moves[num_moves] = col + 1; // Add the valid col to moves
     num_moves += 1; // Increment the valid move counter
   }
 
-  if (col - 1 >= 0 && row + 2 <= 4){ // Valid move 1 left 2 down
+  if (col - 1 >= 0 && row + 2 <= 4 && board[row + 2][col - 1] == 0){ // Valid move 1 left 2 down
     row_moves[num_moves] = row + 2; // Add the valid row to moves
     col_moves[num_moves] = col - 1; // Add the valid col to moves
     num_moves += 1; // Increment the valid move counter
   }
 
-  if (col - 2 >= 0 && row + 1 <= 4){ // Valid move 2 left 1 down
+  if (col - 2 >= 0 && row + 1 <= 4 && board[row + 1][col - 2] == 0){ // Valid move 2 left 1 down
     row_moves[num_moves] = row + 1; // Add the valid row to moves
     col_moves[num_moves] = col - 2; // Add the valid col to moves
     num_moves += 1; // Increment the valid move counter
   }
 
-  if (col - 2 >= 0 && row - 1 >= 0){ // Valid move 2 left 1 up
+  if (col - 2 >= 0 && row - 1 >= 0 && board[row - 1][col - 2] == 0){ // Valid move 2 left 1 up
     row_moves[num_moves] = row - 1; // Add the valid row to moves
     col_moves[num_moves] = col - 2; // Add the valid col to moves
     num_moves += 1; // Increment the valid move counter
   }
 
-  if (col - 1 >= 0 && row - 2 >= 0){ // Valid move 1 left 2 up
+  if (col - 1 >= 0 && row - 2 >= 0 && board[row - 2][col - 1] == 0){ // Valid move 1 left 2 up
     row_moves[num_moves] = row - 2; // Add the valid row to moves
     col_moves[num_moves] = col - 1; // Add the valid col to moves
     num_moves += 1; // Increment the valid move counter
   }
 
-  if (col + 1 <= 4 && row - 2 >= 0){ // Valid move 1 right 2 up
+  if (col + 1 <= 4 && row - 2 >= 0 && board[row - 2][col + 1] == 0){ // Valid move 1 right 2 up
     row_moves[num_moves] = row - 2; // Add the valid row to moves
     col_moves[num_moves] = col + 1; // Add the valid col to moves
     num_moves += 1; // Increment the valid move counter
