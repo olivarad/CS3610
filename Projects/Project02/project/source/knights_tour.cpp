@@ -46,49 +46,56 @@ void KnightsTour::get_moves(
   if (col + 2 <= 4 && row - 1 >= 0 && board[row - 1][col + 2] == 0){ // Valid move 2 right 1 up
     row_moves[num_moves] = row - 1; // Add the valid row to moves
     col_moves[num_moves] = col + 2; // Add the valid col to moves
-    cout << "move found at" << col + 2 << ", " << row - 1 << endl;
+    //cout << "move found at " << col + 2 << ", " << row - 1 << endl;
     num_moves += 1; // Increment the valid move counter
   }
 
   if (col + 2 <= 4 && row + 1 <= 4 && board[row + 1][col + 2] == 0){ // Valid move 2 right 1 down
     row_moves[num_moves] = row + 1; // Add the valid row to moves
     col_moves[num_moves] = col + 2; // Add the valid col to moves
+    //cout << "move found at " << col + 2 << ", " << row + 1 << endl;
     num_moves += 1; // Increment the valid move counter
   }
 
   if (col + 1 <= 4 && row + 2 <= 4 && board[row + 2][col + 1] == 0){ // Valid move 1 right 2 down
     row_moves[num_moves] = row + 2; // Add the valid row to moves
     col_moves[num_moves] = col + 1; // Add the valid col to moves
+    //cout << "move found at " << col + 1 << ", " << row + 2 << endl;
     num_moves += 1; // Increment the valid move counter
   }
 
   if (col - 1 >= 0 && row + 2 <= 4 && board[row + 2][col - 1] == 0){ // Valid move 1 left 2 down
     row_moves[num_moves] = row + 2; // Add the valid row to moves
     col_moves[num_moves] = col - 1; // Add the valid col to moves
+    //cout << "move found at " << col - 1 << ", " << row + 2 << endl;
     num_moves += 1; // Increment the valid move counter
   }
 
   if (col - 2 >= 0 && row + 1 <= 4 && board[row + 1][col - 2] == 0){ // Valid move 2 left 1 down
     row_moves[num_moves] = row + 1; // Add the valid row to moves
     col_moves[num_moves] = col - 2; // Add the valid col to moves
+    //cout << "move found at " << col - 2 << ", " << row + 1 << endl;
     num_moves += 1; // Increment the valid move counter
   }
 
   if (col - 2 >= 0 && row - 1 >= 0 && board[row - 1][col - 2] == 0){ // Valid move 2 left 1 up
     row_moves[num_moves] = row - 1; // Add the valid row to moves
     col_moves[num_moves] = col - 2; // Add the valid col to moves
+    //cout << "move found at " << col - 2 << ", " << row - 1 << endl;
     num_moves += 1; // Increment the valid move counter
   }
 
   if (col - 1 >= 0 && row - 2 >= 0 && board[row - 2][col - 1] == 0){ // Valid move 1 left 2 up
     row_moves[num_moves] = row - 2; // Add the valid row to moves
     col_moves[num_moves] = col - 1; // Add the valid col to moves
+    //cout << "move found at " << col - 1 << ", " << row - 2 << endl;
     num_moves += 1; // Increment the valid move counter
   }
 
   if (col + 1 <= 4 && row - 2 >= 0 && board[row - 2][col + 1] == 0){ // Valid move 1 right 2 up
     row_moves[num_moves] = row - 2; // Add the valid row to moves
     col_moves[num_moves] = col + 1; // Add the valid col to moves
+    //cout << "move found at " << col + 1 << ", " << row - 2 << endl;
     num_moves += 1; // Increment the valid move counter
   }
 }
@@ -103,15 +110,18 @@ void KnightsTour::get_moves(
 
 void KnightsTour::move(int row, int col, int& m, int& num_tours) {
   m++;
-  board[col][row] = m;
+  board[row][col] = m;
   int row_moves[8];
   int col_moves[8];
   int num_moves = 0;
   get_moves(row, col, row_moves, col_moves, num_moves);
-
-  /*for (int i = 0; i < num_moves; i++){
-    cout << col_moves[i] << ", " << row_moves[i] << endl;
-  }*/
+  for (int i = 0; i < num_moves; i++){
+    move(row_moves[i], col_moves[i], m, num_tours);
+    //cout << col_moves[i] << ", " << row_moves[i] << endl;
+  }
+  if (m == 25){
+    print();
+  }
 }
 
 int KnightsTour::generate(int row, int col) {
