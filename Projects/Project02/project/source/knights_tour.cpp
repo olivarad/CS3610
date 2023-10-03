@@ -109,19 +109,17 @@ void KnightsTour::get_moves(
 //     int& num_tours - Total number of tours found.
 
 void KnightsTour::move(int row, int col, int& m, int& num_tours) {
+  if (m == board_size * board_size){
+    //print();
+    return;
+  }
   m++;
   board[row][col] = m;
-  int row_moves[8];
-  int col_moves[8];
+  int row_moves[8] = {};
+  int col_moves[8] = {};
   int num_moves = 0;
   get_moves(row, col, row_moves, col_moves, num_moves);
-  for (int i = 0; i < num_moves; i++){
-    move(row_moves[i], col_moves[i], m, num_tours);
-    //cout << col_moves[i] << ", " << row_moves[i] << endl;
-  }
-  if (m == 25){
-    print();
-  }
+  return;
 }
 
 int KnightsTour::generate(int row, int col) {
