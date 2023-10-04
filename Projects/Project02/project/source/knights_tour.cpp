@@ -116,26 +116,26 @@ void KnightsTour::get_moves(int row, int col, int row_moves[], int col_moves[], 
 //     int& num_tours - Total number of tours found.
 
 void KnightsTour::move(int row, int col, int& m, int& num_tours) {
-  m++;
-  board[row][col] = m;
+  m++; // Increment m
+  board[row][col] = m; // update board
+
+  if (m == board_size*board_size){ // Completion
+  print();
+  num_tours++;
+  }
 
   int row_moves[8], col_moves[8];
   int num_moves = 0;
 
   get_moves(row, col, row_moves, col_moves, num_moves);
 
-  if(num_moves <= 0){
-    return;
-  }
-
-  for (int i = 0; i < num_moves; i++){
-    cout << row_moves[i] << ", " << col_moves[i] << endl;
-  }
-  print();
-
   for (int i = 0; i < num_moves; i++){
     move(row_moves[i], col_moves[i], m, num_tours); 
   }
+
+  // Backtracking Required
+  m--;
+  board[row][col] = 0;
 }
 
 int KnightsTour::generate(int row, int col) {
