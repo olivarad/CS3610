@@ -42,68 +42,54 @@ void KnightsTour::print() {
 void KnightsTour::get_moves(int row, int col, int row_moves[], int col_moves[], int& num_moves) {
   num_moves = 0;
 
-  if ((row - 1 > -1) && (col + 2 < 5)){ // Move on Board
-    if (board[row - 1][col + 2] == 0){
-      row_moves[num_moves] = row - 1; // Add the valid row to moves
-      col_moves[num_moves] = col + 2; // Add the valid col to moves
-      num_moves++; // Increment the valid move counter 
-    }
+  if ((row - 1 > -1) && (col + 2 < 5) && board[row - 1][col + 2] == 0){ // Move on Board
+    row_moves[num_moves] = row - 1; // Add the valid row to moves
+    col_moves[num_moves] = col + 2; // Add the valid col to moves
+    num_moves++; // Increment the valid move counter 
   }
 
-  if ((row + 1 < 5) && (col + 2 < 5)){ // Move on Board
-    if (board[row + 1][col + 2] == 0){
-      row_moves[num_moves] = row + 1; // Add the valid row to moves
-      col_moves[num_moves] = col + 2; // Add the valid col to moves
-      num_moves++; // Increment the valid move counter 
-    }
+  if ((row + 1 < 5) && (col + 2 < 5) && (board[row + 1][col + 2] == 0)){ // Move on Board
+    row_moves[num_moves] = row + 1; // Add the valid row to moves
+    col_moves[num_moves] = col + 2; // Add the valid col to moves
+    num_moves++; // Increment the valid move counter 
   }  
 
-  if ((row + 2 < 5) && (col + 1 < 5)){ // Move on Board
-    if (board[row + 2][col + 1] == 0){
-      row_moves[num_moves] = row + 2; // Add the valid row to moves
-      col_moves[num_moves] = col + 1; // Add the valid col to moves
-      num_moves++; // Increment the valid move counter 
-    }
+  if ((row + 2 < 5) && (col + 1 < 5) && (board[row + 2][col + 1] == 0)){ // Move on Board
+    row_moves[num_moves] = row + 2; // Add the valid row to moves
+    col_moves[num_moves] = col + 1; // Add the valid col to moves
+    num_moves++; // Increment the valid move counter 
   }
 
-  if ((row + 2 < 5) && (col - 1 > -1)){ // Move on Board
-    if (board[row + 2][col - 1] == 0){
-      row_moves[num_moves] = row + 2; // Add the valid row to moves
-      col_moves[num_moves] = col - 1; // Add the valid col to moves
-      num_moves++; // Increment the valid move counter 
-    }
+  if ((row + 2 < 5) && (col - 1 > -1) && (board[row + 2][col - 1] == 0)){ // Move on Board
+    row_moves[num_moves] = row + 2; // Add the valid row to moves
+    col_moves[num_moves] = col - 1; // Add the valid col to moves
+    num_moves++; // Increment the valid move counter 
+
   }
 
-  if ((row + 1 < 5) && (col - 2 > -1)){ // Move on Board
-    if (board[row + 1][col - 2] == 0){
-      row_moves[num_moves] = row + 1; // Add the valid row to moves
-      col_moves[num_moves] = col - 2; // Add the valid col to moves
-      num_moves++; // Increment the valid move counter 
-    }
+  if ((row + 1 < 5) && (col - 2 > -1) && (board[row + 1][col - 2] == 0)){ // Move on Board
+
+    row_moves[num_moves] = row + 1; // Add the valid row to moves
+    col_moves[num_moves] = col - 2; // Add the valid col to moves
+    num_moves++; // Increment the valid move counter 
   }
 
-  if ((row - 1 > -1) && (col - 2 > -1)){ // Move on Board
-    if (board[row - 1][col - 2] == 0){
-      row_moves[num_moves] = row - 1; // Add the valid row to moves
-      col_moves[num_moves] = col - 2; // Add the valid col to moves
-      num_moves++; // Increment the valid move counter 
-    }
+  if ((row - 1 > -1) && (col - 2 > -1) && (board[row - 1][col - 2] == 0)){ // Move on Board
+    row_moves[num_moves] = row - 1; // Add the valid row to moves
+    col_moves[num_moves] = col - 2; // Add the valid col to moves
+    num_moves++; // Increment the valid move counter 
   }
 
-  if ((row - 2 > -1) && (col - 1 > -1)){ // Move on Board
-    if (board[row - 2][col - 1] == 0){
-      row_moves[num_moves] = row - 2; // Add the valid row to moves
-      col_moves[num_moves] = col - 1; // Add the valid col to moves
-      num_moves++; // Increment the valid move counter 
-    }
+  if ((row - 2 > -1) && (col - 1 > -1) && (board[row - 2][col - 1] == 0)){ // Move on Board
+    row_moves[num_moves] = row - 2; // Add the valid row to moves
+    col_moves[num_moves] = col - 1; // Add the valid col to moves
+    num_moves++; // Increment the valid move counter 
   }
 
-  if ((row - 2 > -1) && (col + 1 < 5)){ // Move on Board
-    if (board[row - 2][col + 1] == 0){
-      row_moves[num_moves] = row - 2; // Add the valid row to moves
-      col_moves[num_moves] = col + 1; // Add the valid col to moves
-      num_moves++; // Increment the valid move counter 
-    }
+  if ((row - 2 > -1) && (col + 1 < 5) && (board[row - 2][col + 1] == 0)){ // Move on Board
+    row_moves[num_moves] = row - 2; // Add the valid row to moves
+    col_moves[num_moves] = col + 1; // Add the valid col to moves
+    num_moves++; // Increment the valid move counter 
   }
 }
 
