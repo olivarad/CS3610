@@ -1,3 +1,5 @@
+#pragma once
+
 // Definition of the node
 template <class elemType>
 struct binaryTreeNode
@@ -66,7 +68,11 @@ int max(int x, int y) const;
 int nodeCount(binaryTreeNode<elemType> *p) const;
 //Function to return the number of nodes in the binary
 //tree to which p points
-int leavesCount(binaryTreeNode<elemType> *p) const;
+int leafCount(binaryTreeNode<elemType> *p) const;
 //Function to return the number of leaves in the binary
+//tree to which p points
+
+int nrleafCount(binaryTreeNode<elemType> *p) const;
+//Non-reccursive function to return the number of leaves in the binary
 //tree to which p points
 };
