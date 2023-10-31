@@ -60,7 +60,7 @@ void MinHeap<T>::insert(const T data, const int key) {  // need to implement thi
 template <typename T>
 T MinHeap<T>::extract_min() {                          // need to implement this function
 
-  T data;
-  
+  T data = heap[0].data; // Extracts data from min
+  heap.erase(heap.begin()); // Deletes min
    return data;
 }
