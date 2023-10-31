@@ -3,11 +3,6 @@
 #include "min_heap.h"
 using namespace std;
 
-template <typename T>
-void MinHeap<T>::insert(const T data, const int key){
-
-}
-
 void HuffmanTree::construct(const string message) {
   this->message = message;
 
@@ -16,13 +11,13 @@ void HuffmanTree::construct(const string message) {
   //    message == "aaabbccccdd"
   //    frequencies == {a:3, b:2, c:4, d:2} 
   map<char, int> frequency_map;
-  for (int i = 0; i < message.length(); ++i) {
+  for (unsigned int i = 0; i < message.length(); ++i) {
     if (frequency_map.find(message[i]) != frequency_map.end())
       ++frequency_map[message[i]];
     else
       frequency_map[message[i]] = 1;
   }
-
+/*
   // Create HuffmanNode for each unique letter in message
   // and organize nodes into a min heap
   // e.g.
@@ -32,6 +27,7 @@ void HuffmanTree::construct(const string message) {
   //        {d:2}   {a:3}
   //        /   \   /    \
   //      {c:4} 
+*/
   MinHeap<HuffmanNode*> heap;
   map<char, int>::iterator it = frequency_map.begin();
   for (; it != frequency_map.end(); ++it) {
@@ -40,7 +36,7 @@ void HuffmanTree::construct(const string message) {
     );
     heap.insert(node, it->second);
   }
-
+/*
   // Combine nodes with smallest frequency and insert
   // back into heap until heap size == 1. Along the way,
   // create binary tree out of combined nodes.
@@ -84,6 +80,7 @@ void HuffmanTree::construct(const string message) {
   //                    {b:2}  {d:2}
   //
   //     heap == {*:11}
+*/
   while (heap.size() > 1) {
     HuffmanNode *left, *right;
 
@@ -106,7 +103,18 @@ void HuffmanTree::construct(const string message) {
 
 
 void HuffmanTree::print() const {   // need to implement this function 
-  
+  string message = "";
+  while (this -> root != nullptr){
+    if (this -> root -> left){
+      message + "0";
+    }
+    if (this -> root -> right){
+      message + "1";
+    }
+    if (this -> root == NULL){
+      cout << message << endl;
+    }
+  }
   // Print the Huffman encoding of this->message.
   // Append 0 to a character's encoding if moving left in Huffman tree.
   // Append 1 to a character's encoding if moving right in Huffman tree.
