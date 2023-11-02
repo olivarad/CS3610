@@ -101,20 +101,28 @@ void HuffmanTree::construct(const string message) {
   this->root = heap.peek();
 }
 
+void HuffmanTree::print_tree(HuffmanNode* node, string code, map<char, string> code_map){
+  if (node -> left == NULL && node -> right == NULL){ // Leaf node
+    code_map.emplace(node->character, code); // Add the character and its encoding to the character map
+  }
+  else{
+    print_tree(node -> left, code + '0', code_map);
+    print_tree(node -> right, code + '1', code_map);
+  }
+}
 
-void HuffmanTree::print() const {   // need to implement this function 
-  string message = "";
-  while (this -> root != nullptr){
-    if (this -> root -> left){
-      message + "0";
-    }
-    if (this -> root -> right){
-      message + "1";
-    }
-    if (this -> root == NULL){
-      cout << message << endl;
+void HuffmanTree::print() {   // need to implement this function 
+  map<char, string> code_map;
+  char *mess = message.data(); //  Copies the message into an array of characters
+  string encoded_message = "";
+  print_tree(root, "", code_map);
+  for (unsigned int i = 0; i < this -> message.length(); i++){
+    encoded_message = encoded_message + code_map[mess[i]];
+    if (i != message.length() -1){ // Only add spaces if another encoding will be added
+      encoded_message = encoded_message + " ";
     }
   }
+  cout << encoded_message << endl;
   // Print the Huffman encoding of this->message.
   // Append 0 to a character's encoding if moving left in Huffman tree.
   // Append 1 to a character's encoding if moving right in Huffman tree.
