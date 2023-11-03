@@ -31,36 +31,42 @@ private:
 
 template <typename T>
 void MinHeap<T>::insert(const T data, const int key) {  // need to implement this function
-  heap.push_back(HeapNode(data, key)); // Inserts the new element into the back of the heap array
   int index = heap.size() - 1; // Index of new element is the last index in the vector
-  while (index > 0){ // No need to heapify further if you are the root
-    if (index % 2 == 1){ // Odd indecies are left children
-      int parent = (index - 1) / 2;
-      if (heap[index].key < heap[parent].key){ // Swapping required
-        swap(heap[parent], heap[index]); // Utilizes the STD swap function for individual elements
-        index = parent;
-      }
-      else{ // No swapping required, insertion complete
-        return;
-      }
-    }
-    else{ // Even indecies are right children
-      int parent = (index - 2) / 2;
-      if (heap[index].key < heap[parent].key){ // Swapping required
-        swap(heap[parent], heap[index]); // Utilizes the STD swap function for individual elements
-        index = parent;
-      }
-      else{ // No swapping required, insertion complete
-        return;
-      }
-    }
+
+  HeapNode<T> node(data, key);
+  heap.push_back(node); // Inserts the new element into the back of the heap array
+  while (index > 0 && heap[index].key < heap[(index - 1) / 2].key){ // No need to heapify further if you are the root
+    swap(heap[index], heap[(index - 1) / 2]);
+    index = (index - 1) / 2;
   }
 }
 
 template <typename T>
 T MinHeap<T>::extract_min() {                          // need to implement this function
+  T data = heap[0].data;
+  heap[0] = heap[heap.size() - 1];
+  heap.pop_back();
 
-  T data = heap[0].data; // Extracts data from min
-  heap.erase(heap.begin()); // Deletes min
-   return data;
+  unsigned int i = 0;
+  while(i < heap.size() / 2){
+    if(heap[2 * i + 1].key < heap[2 * i + 2].key){ // Left child is smaller
+      if(heap[2 * i + 1].key < heap[i].key){ // Left child is smaller than parent
+        swap(heap[i], heap[2 * i + 1]);
+        i = 2 * i + 1;
+      }
+      else{
+        break;
+      }
+    }
+    else{
+      if(heap[2 * i + 2].key < heap[i].key){
+        swap(heap[2 * i + 2], heap[i]);
+        i = 2 * i + 2;
+      }
+      else{
+        break;
+      }
+    }
+  }
+  return data;
 }

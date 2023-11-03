@@ -32,8 +32,8 @@ public:
 
   void construct(const string message);
   void destruct() {delete this->root; this->root=NULL; message="";}
-  void print_tree(HuffmanNode* node, string code, map<char, string> &code_map);
-  void print(); // I have changed the initial decleratino of this function to remove the const keywork as it does not allow for a map to be created for encoding
+  void print_tree (HuffmanNode* r,  string code, map<char, string> &m) const;
+  void print() const;
 
 private:
 
