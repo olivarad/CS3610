@@ -4,29 +4,39 @@
 using namespace std;
 
 int partition(vector<int>& list, int first, int last) {
+  // first and last are indecies not dereferenced values
   // The pivot should be the median of the
   // first, middle, and last elements.
   int pivot;
-  int end = list.size() - 1; // End index
   int middle = floor((list.size() - 1) / 2); // Middle index
 
-  if ((list[middle] <= list[0] && list[0] <= list[end]) || (list[end] <= list[0] && list[0] <= list[middle])) {
-        pivot = 0;
+  if ((list[middle] <= list[first] && list[first] <= list[last]) || (list[last] <= list[first] && list[first] <= list[middle])) {
+      pivot = first;
     }
 
-    else if ((list[0] <= list[middle] && list[middle] <= list[end]) || (list[end] <= list[middle] && list[middle] <= list[0])) {
-        pivot = middle;
+  else if ((list[0] <= list[middle] && list[middle] <= list[last]) || (list[last] <= list[middle] && list[middle] <= list[0])) {
+      pivot = middle;
     }
 
-    else{
-        pivot = end;
+  else{
+      pivot = last;
     }
 
+  swap(list[first], list[pivot]); // Swap the first element of the list with the pivot
+  
   int smallIndex = first;
+  
+  for (int i = first + 1; i < list.size(); i++){
+    if (list[i] < list[pivot]){
+      smallIndex++; // Increment smallIndex
+      swap(list[i], list[smallIndex]); // Swap the current element iwth the array element pointed to by smallIndex
+    }
+  }
+  swap(list[pivot], list[smallIndex]); // Swap the first element, that is, the pivot, with the array element pointed to by smallIndex
 
   // partition procedure
   
-  return smallIndex;  
+  return smallIndex;  // Returns pivot point
 }
 
 void quicksort(vector<int>& list, int first, int last) {
