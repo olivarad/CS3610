@@ -1,5 +1,6 @@
 #include <iostream>
 #include <vector>
+#include <queue>
 #include <math.h>
 using namespace std;
 
@@ -48,12 +49,27 @@ void quicksort(vector<int>& list, int first, int last) {
   }
 }
 
-void multiway_merge(
-  vector<vector<int> >& input_lists, vector<int>& output_list
-) 
-{
-
-} 
+void multiway_merge(vector<vector<int> >& input_lists, vector<int>& output_list){
+  priority_queue<int> heap; // Technically max heap (insert values * -1 to turn into min heap (must undo * -1))
+  int element;
+  for (int i = 0; i < input_lists.size(); i++){
+    heap.push(-1 * input_lists[i].front()); // Input the negative of the first element of every vector in the vector of vectors
+  }
+  while (!heap.empty()){
+    element = heap.top() * -1;
+    heap.pop();
+    for (int i = 0; i < input_lists.size(); i++){
+      if (element = input_lists[i].front()){
+        input_lists[i].erase(input_lists[i].begin()); // Erases the first element from the vector
+        if (!input_lists[i].empty()){
+          heap.push(input_lists[i].front());
+        }
+        break;
+      }
+    }
+    output_list.push_back(element);
+  }
+  } 
 
 int main(int argc, char** argv) {
   int n, m;
