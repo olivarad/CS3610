@@ -23,7 +23,7 @@ int partition(vector<int>& list, int first, int last) {
     }
 
   swap(list[first], list[pivot]); // Swap the first element of the list with the pivot
-  
+
   int smallIndex = first;
   
   for (int i = first + 1; i < list.size(); i++){
@@ -40,6 +40,12 @@ int partition(vector<int>& list, int first, int last) {
 }
 
 void quicksort(vector<int>& list, int first, int last) {
+  int pivotLocation;
+  if (first < last){
+    pivotLocation = partition(list, first, last);
+    quicksort(list, first, pivotLocation - 1);
+    quicksort(list, pivotLocation + 1, last);
+  }
 }
 
 void multiway_merge(
