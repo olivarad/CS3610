@@ -1,10 +1,24 @@
 #include <iostream>
 #include <vector>
+#include <math.h>
 using namespace std;
 
 int partition(vector<int>& list, int first, int last) {
   // The pivot should be the median of the
   // first, middle, and last elements.
+  int middle = floor((list.size() - 1) / 2); // Middle point is the floor of half of the size minus 1
+  
+  if ((list[middle] < list[1] < list[-1]) || (list[-1] < list[1] < list[middle])){ // first index is pivot point
+    int pivot = 1;
+  }
+
+  if ((list[1] < list[middle] < list[-1]) || (list[-1] < list[middle] < list[1])){ // Middle is pivot point
+    int pivot = middle;
+  }
+
+  if ((list[middle] < list[-1] < list[1]) || (list[1] < list[-1] < list[middle])){ // last index is pivot point
+    int pivot = list.size() - 1;
+  }
 
   int smallIndex = first;
 
