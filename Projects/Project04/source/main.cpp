@@ -4,12 +4,49 @@
 #include <math.h>
 using namespace std;
 
+
+/*
+Changed textbook code to make the function actually work
+*/
 int partition(vector<int>& list, int first, int last) {
   // first and last are indecies not dereferenced values
   // The pivot should be the median of the
   // first, middle, and last elements.
-  int pivot;
-  int middle = floor((list.size() - 1) / 2); // Middle index
+  int pivot = list[first];
+ 
+    int count = 0;
+    for (int i = first + 1; i <= last; i++) {
+        if (list[i] <= pivot)
+            count++;
+    }
+
+    int pivotIndex = first + count;
+    swap(list[first], list[pivotIndex]);
+
+    int i = first;
+    int j = last;
+
+    while (i < pivotIndex && j > pivotIndex){
+      while (list[i] <= pivot){
+        i++;
+      }
+
+      while (list[j] > pivot){
+        j--;
+      }
+
+      if (i < pivotIndex && j > pivotIndex){
+        swap(list[i++], list[j--]);
+      }
+    }
+
+    return pivotIndex;
+
+/*
+Non-working textbook code
+*/
+  /*int pivot;
+  int middle = floor((last - 1) / 2); // Middle index
 
   if ((list[middle] <= list[first] && list[first] <= list[last]) || (list[last] <= list[first] && list[first] <= list[middle])) {
       pivot = first;
@@ -37,16 +74,20 @@ int partition(vector<int>& list, int first, int last) {
 
   // partition procedure
   
-  return smallIndex;  // Returns pivot point
+  return smallIndex;  // Returns pivot point*/
 }
 
-void quicksort(vector<int>& list, int first, int last) {
+void recQuickSort(vector<int>& list, int first, int last){
   int pivotLocation;
   if (first < last){
     pivotLocation = partition(list, first, last);
-    quicksort(list, first, pivotLocation - 1);
-    quicksort(list, pivotLocation + 1, last);
+    recQuickSort(list, first, pivotLocation - 1);
+    recQuickSort(list, pivotLocation + 1, last);
   }
+}
+
+void quicksort(vector<int>& list, int first, int last) {
+  recQuickSort(list, 0, list.size() -1);
 }
 
 void multiway_merge(vector<vector<int> >& input_lists, vector<int>& output_list){
@@ -82,11 +123,16 @@ int main(int argc, char** argv) {
       cin >> input_lists[i][j];
     }
   }
-
   // Quicksort k sublists
   for (int i = 0; i < input_lists.size(); ++i)
     quicksort(input_lists[i], 0, m-1);
 
+  for (int i = 0; i < n; ++i) {
+    for (int j = 0; j < m; ++j) {
+      cout << input_lists[i][j] << " ";
+    }
+    cout << endl;
+  }
   // Merge n input sublists into one sorted list
   vector<int> output_list(n * m);
   multiway_merge(input_lists, output_list);
