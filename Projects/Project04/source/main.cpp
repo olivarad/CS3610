@@ -12,10 +12,10 @@ int partition(vector<int>& list, int first, int last) {
   // first and last are indecies not dereferenced values
   // The pivot should be the median of the
   // first, middle, and last elements.
-  int pivot = list[first];
+  int pivot = list[first]; // Pivot is defined as the first element
  
-    int count = 0;
-    for (int i = first + 1; i <= last; i++) {
+    int count = 0; // Variable to offset after finding real pivot point
+    for (int i = first + 1; i <= last; i++) { // Generates count variable to shift pivot
         if (list[i] <= pivot)
             count++;
     }
@@ -26,7 +26,7 @@ int partition(vector<int>& list, int first, int last) {
     int i = first;
     int j = last;
 
-    while (i < pivotIndex && j > pivotIndex){
+    while (i < pivotIndex && j > pivotIndex){ // Go until you arrive at the pivot point
       while (list[i] <= pivot){
         i++;
       }
@@ -91,24 +91,25 @@ void quicksort(vector<int>& list, int first, int last) {
 }
 
 void multiway_merge(vector<vector<int> >& input_lists, vector<int>& output_list){
-  priority_queue<int> heap; // Technically max heap (insert values * -1 to turn into min heap (must undo * -1))
+  std::priority_queue<int> heap; // Technically max heap (insert values * -1 to turn into min heap (must undo * -1))
   int element;
   for (int i = 0; i < input_lists.size(); i++){
-    heap.push(-1 * input_lists[i].front()); // Input the negative of the first element of every vector in the vector of vectors
+    heap.push(input_lists[i].front() * -1); // Input the negative of the first element of every vector in the vector of vectors
   }
+  cout << "Yeah Dog!\n";
   while (!heap.empty()){
     element = heap.top() * -1;
+    output_list.push_back(element);
     heap.pop();
     for (int i = 0; i < input_lists.size(); i++){
-      if (element = input_lists[i].front()){
-        input_lists[i].erase(input_lists[i].begin()); // Erases the first element from the vector
-        if (!input_lists[i].empty()){
-          heap.push(input_lists[i].front());
+      if (!input_lists[i].empty()){
+        if (element = input_lists[i].front()){
+          input_lists[i].erase(input_lists[i].begin()); // Erases the first element from the vector
+          heap.push((input_lists[i].front() * -1));
+          break;
         }
-        break;
       }
     }
-    output_list.push_back(element);
   }
   } 
 
