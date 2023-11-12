@@ -91,6 +91,7 @@ void quicksort(vector<int>& list, int first, int last) {
 }
 
 void multiway_merge(vector<vector<int> >& input_lists, vector<int>& output_list){
+  int output_index = 0; // Since the vector is already filled with 0's of the capacity needed this will allow prvention of double sized vector with leading zeros
   typedef pair<int, pair<int, int>> ppi; // pair of pair of ints to track element, from vector, and from vector index
   priority_queue<ppi, vector<ppi>, greater<ppi>> heap;
   for (int i = 0; i < input_lists.size(); i++){
@@ -102,16 +103,12 @@ void multiway_merge(vector<vector<int> >& input_lists, vector<int>& output_list)
     heap.pop();
     int i = current.second.first; // From vector
     int j = current.second.second; // Index of from vector
-    output_list.push_back(current.first); // push element to output list
+    output_list[output_index] = current.first; // push element to output list
+    output_index++;
 
     if (j + 1 < input_lists[i].size()){
       heap.push({input_lists[i][j + 1], {i, j + 1}});
     }
-  }
-
-  int target_size = output_list.size()/2;
-  while (output_list.size() != target_size){
-    output_list.erase(output_list.begin());
   }
   } 
 
