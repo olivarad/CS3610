@@ -1,7 +1,6 @@
 #include <iostream>
 #include <vector>
 #include <queue>
-#include <bits/stdc++.h> 
 #include <math.h>
 using namespace std;
 
@@ -92,22 +91,28 @@ void quicksort(vector<int>& list, int first, int last) {
 }
 
 void multiway_merge(vector<vector<int> >& input_lists, vector<int>& output_list){
-  std::priority_queue<pair<int, int>> heap; // Technically max heap (insert values * -1 to turn into min heap (must undo * -1))
-  int from;
+  typedef pair<int, pair<int, int>> ppi; // pair of pair of ints to track element, from vector, and from vector index
+  priority_queue<ppi, vector<ppi>, greater<ppi>> heap;
   for (int i = 0; i < input_lists.size(); i++){
-    heap.push(make_pair(i, input_lists[i].front() * -1)); // Pair with source vector and value times negative 1 to allow for use of unmodified priority queue
-    input_lists[i].erase(input_lists[i].begin()); // Erases the heaped element from vector
+    heap.push({input_lists[i][0], {i, 0}});
   }
-  while(!heap.empty()){
-    output_list.push_back(heap.top().second * -1); // Push the non vector tracking number to the output list
-    from = heap.top().first; // Helping track where the output list number came from
-    heap.pop(); // Remeove recentley grabbed element from heap
-    if (!input_lists[from].empty()){ // If the source vector is not empty
-      heap.push(make_pair(from, input_lists[from].front() * -1)); // Input the next element as well as a way to track where its from
-      input_lists[from].erase(input_lists[from].begin()); // Erases the heaped element from vector
+
+  while (!heap.empty()){
+    ppi current = heap.top();
+    heap.pop();
+    int i = current.second.first; // From vector
+    int j = current.second.second; // Index of from vector
+    output_list.push_back(current.first); // push element to output list
+
+    if (j + 1 < input_lists[i].size()){
+      heap.push({input_lists[i][j + 1], {i, j + 1}});
     }
   }
-  cout << heap.size() << " " << output_list.size() << endl;
+
+  int target_size = output_list.size()/2;
+  while (output_list.size() != target_size){
+    output_list.erase(output_list.begin());
+  }
   } 
 
 int main(int argc, char** argv) {
@@ -125,19 +130,13 @@ int main(int argc, char** argv) {
   for (int i = 0; i < input_lists.size(); ++i)
     quicksort(input_lists[i], 0, m-1);
 
-  for (int i = 0; i < n; ++i) {
-    for (int j = 0; j < m; ++j) {
-      cout << input_lists[i][j] << " ";
-    }
-    cout << endl;
-  }
   // Merge n input sublists into one sorted list
   vector<int> output_list(n * m);
   multiway_merge(input_lists, output_list);
-/*
+
   for (int i = 0; i < output_list.size(); ++i)
     cout << output_list[i] << " ";
   cout << endl;
-*/
+
   return 1;
 }
