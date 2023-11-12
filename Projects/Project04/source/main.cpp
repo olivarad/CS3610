@@ -1,6 +1,7 @@
 #include <iostream>
 #include <vector>
 #include <queue>
+#include <bits/stdc++.h> 
 #include <math.h>
 using namespace std;
 
@@ -91,26 +92,22 @@ void quicksort(vector<int>& list, int first, int last) {
 }
 
 void multiway_merge(vector<vector<int> >& input_lists, vector<int>& output_list){
-  std::priority_queue<int> heap; // Technically max heap (insert values * -1 to turn into min heap (must undo * -1))
-  int element;
+  std::priority_queue<pair<int, int>> heap; // Technically max heap (insert values * -1 to turn into min heap (must undo * -1))
+  int from;
   for (int i = 0; i < input_lists.size(); i++){
-    heap.push(input_lists[i].front() * -1); // Input the negative of the first element of every vector in the vector of vectors
+    heap.push(make_pair(i, input_lists[i].front() * -1)); // Pair with source vector and value times negative 1 to allow for use of unmodified priority queue
+    input_lists[i].erase(input_lists[i].begin()); // Erases the heaped element from vector
   }
-  cout << "Yeah Dog!\n";
-  while (!heap.empty()){
-    element = heap.top() * -1;
-    output_list.push_back(element);
-    heap.pop();
-    for (int i = 0; i < input_lists.size(); i++){
-      if (!input_lists[i].empty()){
-        if (element = input_lists[i].front()){
-          input_lists[i].erase(input_lists[i].begin()); // Erases the first element from the vector
-          heap.push((input_lists[i].front() * -1));
-          break;
-        }
-      }
+  while(!heap.empty()){
+    output_list.push_back(heap.top().second * -1); // Push the non vector tracking number to the output list
+    from = heap.top().first; // Helping track where the output list number came from
+    heap.pop(); // Remeove recentley grabbed element from heap
+    if (!input_lists[from].empty()){ // If the source vector is not empty
+      heap.push(make_pair(from, input_lists[from].front() * -1)); // Input the next element as well as a way to track where its from
+      input_lists[from].erase(input_lists[from].begin()); // Erases the heaped element from vector
     }
   }
+  cout << heap.size() << " " << output_list.size() << endl;
   } 
 
 int main(int argc, char** argv) {
@@ -137,10 +134,10 @@ int main(int argc, char** argv) {
   // Merge n input sublists into one sorted list
   vector<int> output_list(n * m);
   multiway_merge(input_lists, output_list);
-
+/*
   for (int i = 0; i < output_list.size(); ++i)
     cout << output_list[i] << " ";
   cout << endl;
-
+*/
   return 1;
 }
