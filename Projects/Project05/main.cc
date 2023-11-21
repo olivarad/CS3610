@@ -46,6 +46,21 @@ int minDist(int dist[], bool included[], int n){
     return min_index;
 }
 
+bool all_visited(int n, string visited[]){
+    int count = 0;
+    for (int i = 0; i < n; i++)
+        if (visited[i] != "NULL"){
+            count ++;
+        }
+    
+    if (count == n){ // All cities visited
+        return true;
+    }
+    else{
+        return false;
+    }
+}
+
 bool no_visit(int n, string city, string unvisited[]){
     for (int i = 0; i < n; i++)
         if (city == unvisited[i])
@@ -90,5 +105,29 @@ void dijkstra(int n, vector<vector<int>> matrix, string cities[]){
         unvisited[i] = cities[i];
     }
 
+    while(!all_visited(n, visited)){ // Run until every city has been visited
+        // Find unvisited city with shortest distance from start
+        int city = shortest(n, table, unvisited); // Table index of city to branch from
+        for (int i = 0; i < n; i++){ // Find all unvisited cities that branch from city
+            if (i != city && no_visit(n, cities[i], unvisited) && matrix[city][i] != 0){ // i is the index of an unvisited city (other than city) with a path from city
+                int dist = table[city].second.first + matrix[city][i];
+                if (dist < table[i].second.first){ // Traveling from city is faster method than current
+                    table[i].second.first = dist;
+                    table[i].second.second = cities[city];
+                }
+            }
+        }
+        unvisited[city] = "NULL";
+        visited[city] = cities[city];
+    }
 
+    if (table[n].second.second != "NULL"){ // A source from city 0 to city n exists
+        int current = n;
+        typedef pair<string, int> path; // city, distance
+        vector<path> mapped_path;
+        
+        while (table[current].second.second != "NULL"){
+            
+        }
+    }    
 }
