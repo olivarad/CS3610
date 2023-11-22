@@ -2,7 +2,7 @@
 #include <vector>
 using namespace std;
 
-void dijkstra(int n, vector<vector<int>> distance_matrix, string cities[]);
+void dijkstra(const int &n, const vector<vector<int>> &distance_matrix, string cities[]);
 
 int main(){
     /*
@@ -33,22 +33,7 @@ int main(){
        }
 }
 
-int city_to_int(int n, string city, string cities[]){
-    for (int i = 0; i < n; i++)
-        if (city == cities[i])
-            return i; // Index of source city
-    return -1; // Sentinel to indicate failure
-}
-
-bool no_visit(int n, string city, string unvisited[]){
-    for (int i = 0; i < n; i++)
-        if (city == unvisited[i])
-            return true; // City has not been visited
-    
-    return false; // City has been visited
-}
-
-int shortest(int n, pair<string, pair<int, int>> table[], string unvisited[]){
+int shortest(const int &n, const pair<string, pair<int, int>> table[], const string unvisited[]){
     int initial;
     int shortest;
     int city;
@@ -61,7 +46,7 @@ int shortest(int n, pair<string, pair<int, int>> table[], string unvisited[]){
         }
     
     for (int i = initial + 1; i < n; i++)
-        if (table[i].second.first < shortest && no_visit(n, table[i].first, unvisited)){
+        if (table[i].second.first < shortest && unvisited[i] == table[i].first){
             shortest = table[i].second.first;
             city = i;
         }
@@ -69,39 +54,33 @@ int shortest(int n, pair<string, pair<int, int>> table[], string unvisited[]){
     return city;
 }
 
-void dijkstra(int n, vector<vector<int>> matrix, string cities[]){
+void dijkstra(const int &n, const vector<vector<int>> &matrix, string cities[]){ // cities is a copy so we can use this as our list of unvisited cities
     typedef pair<string, pair<int, int>> Data; // City (.first), Shortest distance from A (.second.first), Previous city (.second.second)
     Data table[n]; // Array to store data relevant to dijkstras algorithm
-
-    string visited[n] = {"NULL"}; // Initialized to null to indicate that no cities have been visited
-    string unvisited[n]; // Unvisited cities
     
     table[0].first = cities[0];
-    table[0].second.first = 0;
+    table[0].second.first = 0; // Distance from self is 0
     table[0].second.second = 999; // No previous city
 
-    unvisited[0] = cities[0]; // Initialized seperately to simply for loop in the setup
     for (int i = 1; i < n; i++){
         table[i].first = cities[i];
         table[i].second.first = 999; // Indicates no known shortest distance
         table[i].second.second = 999; // No previous city
-        unvisited[i] = cities[i];
     }
 
-    for(int city_counter = 0; city_counter < n; city_counter++){ // Run until every city has been visited
+    for(int i = 0; i < n; i++){ // Run until every city has been visited
         // Find unvisited city with shortest distance from start
-        int city = shortest(n, table, unvisited); // Table index of city to branch from
-        for (int i = 0; i < n; i++){ // Find all unvisited cities that branch from city
-            if (i != city && no_visit(n, cities[i], unvisited) && matrix[city][i] != 0){ // i is the index of an unvisited city (other than city) with a path from city
-                int dist = table[city].second.first + matrix[city][i];
-                if (dist < table[i].second.first){ // Traveling from city is faster method than current
-                    table[i].second.first = dist;
-                    table[i].second.second = city;
+        int city = shortest(n, table, cities); // Table index of city to branch from
+        for (int j = 0; j < n; j++){ // Find all unvisited cities that branch from city
+            if (j != city && cities[j] == table[j].first && matrix[city][j] != 0){ // j is the index of an unvisited city (other than city) with a path from city
+                int dist = table[city].second.first + matrix[city][j]; // New path found of distance start to city plus city to j
+                if (dist < table[j].second.first){ // Traveling from city is faster method than current
+                    table[j].second.first = dist;
+                    table[j].second.second = city;
                 }
             }
         }
-        unvisited[city] = "NULL";
-        visited[city] = cities[city];
+        cities[city] = "NULL";
     }
 
     vector <string> path;
