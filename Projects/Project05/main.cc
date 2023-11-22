@@ -33,17 +33,11 @@ int main(){
        }
 }
 
-int minDist(int dist[], bool included[], int n){
-    int min = 999;
-    int min_index;
-
-    for (int i = 0; i < n; i++){
-        if (included[i] == false && dist[i] <= min){
-            min = dist[i];
-            min_index = i;
-        }
-    }
-    return min_index;
+int city_to_int(int n, string city, string cities[]){
+    for (int i = 0; i < n; i++)
+        if (city == cities[i])
+            return i; // Index of source city
+    return -1; // Sentinel to indicate failure
 }
 
 bool all_visited(int n, string visited[]){
@@ -69,25 +63,29 @@ bool no_visit(int n, string city, string unvisited[]){
     return false; // City has been visited
 }
 
-int shortest(int n, pair<string, pair<int, string>> table[], string unvisited[]){
+int shortest(int n, pair<string, pair<int, int>> table[], string unvisited[]){
     int initial;
     int shortest;
+    int city;
     for (int i = 0; i < n; i++)
         if (unvisited[i] != "NULL"){
             initial = i;
             shortest = table[i].second.first;
+            city = i;
             break;
         }
     
-    for (int i = initial; i< n; i++)
-        if (table[i].second.first < shortest && no_visit(n, table[i].first, unvisited))
+    for (int i = initial + 1; i < n; i++)
+        if (table[i].second.first < shortest && no_visit(n, table[i].first, unvisited)){
             shortest = table[i].second.first;
+            city = i;
+        }
     
-    return shortest;
+    return city;
 }
 
 void dijkstra(int n, vector<vector<int>> matrix, string cities[]){
-    typedef pair<string, pair<int, string>> Data; // City (.first), Shortest distance from A (.second.first), Previous city (.second.second)
+    typedef pair<string, pair<int, int>> Data; // City (.first), Shortest distance from A (.second.first), Previous city (.second.second)
     Data table[n]; // Array to store data relevant to dijkstras algorithm
 
     string visited[n] = {"NULL"}; // Initialized to null to indicate that no cities have been visited
@@ -95,13 +93,13 @@ void dijkstra(int n, vector<vector<int>> matrix, string cities[]){
     
     table[0].first = cities[0];
     table[0].second.first = 0;
-    table[0].second.second = "NULL"; // No previous city
+    table[0].second.second = 999; // No previous city
 
     unvisited[0] = cities[0]; // Initialized seperately to simply for loop in the setup
     for (int i = 1; i < n; i++){
         table[i].first = cities[i];
         table[i].second.first = 999; // Indicates no known shortest distance
-        table[i].second.second = "NULL"; // No previous city
+        table[i].second.second = 999; // No previous city
         unvisited[i] = cities[i];
     }
 
@@ -113,21 +111,12 @@ void dijkstra(int n, vector<vector<int>> matrix, string cities[]){
                 int dist = table[city].second.first + matrix[city][i];
                 if (dist < table[i].second.first){ // Traveling from city is faster method than current
                     table[i].second.first = dist;
-                    table[i].second.second = cities[city];
+                    table[i].second.second = city;
                 }
             }
         }
         unvisited[city] = "NULL";
         visited[city] = cities[city];
     }
-
-    if (table[n].second.second != "NULL"){ // A source from city 0 to city n exists
-        int current = n;
-        typedef pair<string, int> path; // city, distance
-        vector<path> mapped_path;
-        
-        while (table[current].second.second != "NULL"){
-            
-        }
-    }    
+    cout << table[n-1].second.second;
 }
