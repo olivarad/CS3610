@@ -40,21 +40,6 @@ int city_to_int(int n, string city, string cities[]){
     return -1; // Sentinel to indicate failure
 }
 
-bool all_visited(int n, string visited[]){
-    int count = 0;
-    for (int i = 0; i < n; i++)
-        if (visited[i] != "NULL"){
-            count ++;
-        }
-    
-    if (count == n){ // All cities visited
-        return true;
-    }
-    else{
-        return false;
-    }
-}
-
 bool no_visit(int n, string city, string unvisited[]){
     for (int i = 0; i < n; i++)
         if (city == unvisited[i])
@@ -103,7 +88,7 @@ void dijkstra(int n, vector<vector<int>> matrix, string cities[]){
         unvisited[i] = cities[i];
     }
 
-    while(!all_visited(n, visited)){ // Run until every city has been visited
+    for(int city_counter = 0; city_counter < n; city_counter++){ // Run until every city has been visited
         // Find unvisited city with shortest distance from start
         int city = shortest(n, table, unvisited); // Table index of city to branch from
         for (int i = 0; i < n; i++){ // Find all unvisited cities that branch from city
@@ -118,5 +103,16 @@ void dijkstra(int n, vector<vector<int>> matrix, string cities[]){
         unvisited[city] = "NULL";
         visited[city] = cities[city];
     }
-    cout << table[n-1].second.second;
+
+    vector <string> path;
+    int current = table[n-1].second.second; // Last value in table
+    path.push_back(table[n-1].first);
+    while (current != 999){
+        path.push_back(table[current].first);
+        current = table[current].second.second;
+    }
+
+    for (auto it =  path.rbegin(); it != path.rend(); ++it)
+        cout << *it << " ";
+    cout << table[n-1].second.first << endl;
 }
