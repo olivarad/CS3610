@@ -1,3 +1,10 @@
+/**
+ * @file main.cc
+ * @author Olivia Radecki (gr982220@ohio.edu)
+ * @brief Array based implementation of Djikstra's algorithm
+ * @date 2023-11-22
+ */
+
 #include <iostream>
 #include <vector>
 using namespace std;
